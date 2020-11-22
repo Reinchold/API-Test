@@ -6,11 +6,25 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
+    @ObservedObject var employeeViewModel = EmployeeViewModel()
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        Form {
+            Section {
+                Button(action: {self.employeeViewModel.recevedEmployeeData()}) {
+                    Text("Get employee name")
+                }
+            }
+            Section {
+                List(employeeViewModel.publishingNames, id:\.self) { publishedName in
+                    Text("\(publishedName)")
+                }
+            }
+        }
+        
     }
 }
 
@@ -19,3 +33,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
